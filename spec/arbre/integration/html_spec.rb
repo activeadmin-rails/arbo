@@ -5,12 +5,17 @@ describe Arbre do
   let(:helpers){ nil }
   let(:assigns){ {} }
 
+  def output_buffer(actx)
+    actx.render_in(actx) && actx.output_buffer.rewind && actx.output_buffer.read
+  end
+
   it "should render a single element" do
     actx = arbre {
       span "Hello World"
     }
     html = "<span>Hello World</span>\n"
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should render a child element" do
@@ -25,6 +30,7 @@ describe Arbre do
 </span>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should render an unordered list" do
@@ -43,6 +49,7 @@ HTML
 </ul>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should allow local variables inside the tags" do
@@ -61,6 +68,7 @@ HTML
 </ul>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
 
@@ -82,6 +90,7 @@ HTML
 </div>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
 
@@ -101,6 +110,7 @@ HTML
 </div>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
 
@@ -120,6 +130,7 @@ HTML
 </div>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should add content to the parent if the element is passed into block" do
@@ -139,6 +150,7 @@ HTML
 </div>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should have the parent set on it" do
@@ -162,6 +174,7 @@ HTML
 <li>Hello World</li>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should turn string return values into text nodes" do
@@ -185,6 +198,7 @@ HTML
 <tbody></tbody>
 HTML
     expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   describe "self-closing nodes" do
@@ -195,6 +209,7 @@ HTML
       }
       html = "<script type=\"text/javascript\"></script>\n"
       expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should self-close meta tags" do
@@ -203,6 +218,7 @@ HTML
       }
       html = "<meta content=\"text/html; charset=utf-8\"/>\n"
       expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should self-close link tags" do
@@ -211,6 +227,7 @@ HTML
       }
       html = "<link rel=\"stylesheet\"/>\n"
       expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     Arbre::HTML::Tag::SELF_CLOSING_ELEMENTS.each do |tag|
@@ -220,6 +237,7 @@ HTML
         }
         html = "<#{tag}/>\n"
         expect(actx.to_s).to eq(html)
+        expect(output_buffer actx).to eq(html)
       end
     end
 
@@ -235,6 +253,7 @@ HTML
 <span>&lt;br /&gt;</span>
 HTML
       expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should return html safe strings" do
@@ -253,6 +272,7 @@ HTML
 </span>
 HTML
       expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should escape string contents when passed in block" do
@@ -269,6 +289,7 @@ HTML
 </span>
 HTML
       expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should escape the contents of attributes" do
