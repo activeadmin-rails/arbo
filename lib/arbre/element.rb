@@ -143,6 +143,22 @@ module Arbre
       content
     end
 
+    # Rendering strategy that visits all elements and appends output to a buffer.
+    def render_in(context = arbre_context)
+      children.collect do |element|
+        element.render_in_or_to_s(context)
+      end.join('')
+    end
+
+    # Use render_in to render element unless closer ancestor overrides :to_s only.
+    def render_in_or_to_s(context)
+      if method_distance(:render_in) <= method_distance(:to_s)
+        render_in(context)
+      else
+        to_s.tap { |s| context.output_buffer << s }
+      end
+    end
+
     def +(element)
       case element
       when Element, ElementCollection
@@ -192,6 +208,14 @@ module Arbre
       s = ""
       within(Element.new) { s = helpers.send(name, *args, &block) }
       s.is_a?(Element) ? s.to_s : s
+    end
+
+    def method_distance(name)
+      self.class.ancestors.index method_owner(name)
+    end
+
+    def method_owner(name)
+      self.class.instance_method(name).owner
     end
   end
 end

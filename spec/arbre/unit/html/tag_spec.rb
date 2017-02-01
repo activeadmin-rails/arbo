@@ -112,4 +112,13 @@ describe Arbre::HTML::Tag do
 
   end
 
+  describe "#render_in" do
+    before { tag.build "Hello World", id: "my_id" }
+
+    it "renders tag" do
+      html = tag.render_in(Arbre::Context.new)
+
+      expect(html).to eq "<tag id=\"my_id\">Hello World</tag>\n"
+    end
+  end
 end

@@ -20,6 +20,12 @@ module Arbre
         element.to_s
       end.join('').html_safe
     end
+
+    def render_in(context)
+      self.collect do |element|
+        element.render_in(context)
+      end.join('').html_safe
+    end
   end
 
 end
