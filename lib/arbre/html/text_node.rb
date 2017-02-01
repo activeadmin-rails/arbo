@@ -33,6 +33,10 @@ module Arbre
       def to_s
         ERB::Util.html_escape(@content.to_s)
       end
+
+      def cat(output_buffer)
+        output_buffer << to_s
+      end
     end
 
   end

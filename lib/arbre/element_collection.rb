@@ -20,6 +20,11 @@ module Arbre
         element.to_s
       end.join('').html_safe
     end
+
+    def cat(output_buffer)
+      each { |element| element.cat_or_to_s(output_buffer) }
+      output_buffer
+    end
   end
 
 end

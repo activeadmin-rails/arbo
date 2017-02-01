@@ -94,6 +94,10 @@ module Arbre
     end
     alias_method :within, :with_current_arbre_element
 
+    def output_buffer
+      @output_buffer ||= StringIO.new
+    end
+
     private
 
 

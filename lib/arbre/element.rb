@@ -142,6 +142,21 @@ module Arbre
       content
     end
 
+    # Rendering strategy that visits all elements and appends output to a buffer.
+    def cat(output_buffer = arbre_context.output_buffer)
+      children.each { |element| element.cat_or_to_s(output_buffer) }
+      output_buffer
+    end
+
+    # Use cat to render element unless closer ancestor overrides :to_s only.
+    def cat_or_to_s(output_buffer)
+      if method_distance(:cat) <= method_distance(:to_s)
+        cat(output_buffer)
+      else
+        output_buffer << to_s
+      end
+    end
+
     def +(element)
       case element
       when Element, ElementCollection
@@ -183,5 +198,12 @@ module Arbre
       end
     end
 
+    def method_distance(name)
+      self.class.ancestors.index method_owner(name)
+    end
+
+    def method_owner(name)
+      self.class.instance_method(name).owner
+    end
   end
 end

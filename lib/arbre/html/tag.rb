@@ -100,6 +100,10 @@ module Arbre
         indent(opening_tag, content, closing_tag).html_safe
       end
 
+      def cat(output_buffer = arbre_context.output_buffer)
+        indent(opening_tag, content, closing_tag, output_buffer)
+      end
+
       private
 
       def opening_tag
@@ -112,10 +116,8 @@ module Arbre
 
       INDENT_SIZE = 2
 
-      def indent(open_tag, child_content, close_tag)
+      def indent(open_tag, child_content, close_tag, html = "")
         spaces = ' ' * indent_level * INDENT_SIZE
-
-        html = ""
 
         if no_child? || child_is_text?
           if self_closing_tag?
@@ -127,7 +129,7 @@ module Arbre
         else
           # multiple lines
           html << spaces << open_tag << "\n"
-          html << child_content # the child takes care of its own spaces
+          children.cat(html) # the child takes care of its own spaces
           html << spaces << close_tag
         end
 

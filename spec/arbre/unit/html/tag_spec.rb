@@ -112,4 +112,14 @@ describe Arbre::HTML::Tag do
 
   end
 
+  describe "#cat" do
+    before { tag.build "Hello World", id: "my_id" }
+
+    it "renders tag" do
+      output_buffer = tag.cat
+      output_buffer.rewind
+
+      expect(output_buffer.read).to eq "<tag id=\"my_id\">Hello World</tag>\n"
+    end
+  end
 end
