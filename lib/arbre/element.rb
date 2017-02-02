@@ -155,6 +155,7 @@ module Arbre
       if method_distance(:render_in) <= method_distance(:to_s)
         render_in(context)
       else
+        ActiveSupport::Deprecation.warn("#render_in should be defined for rendering #{method_owner(:to_s)} instead of #to_s")
         to_s.tap { |s| context.output_buffer << s }
       end
     end
