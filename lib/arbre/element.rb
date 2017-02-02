@@ -153,6 +153,7 @@ module Arbre
       if method_distance(:cat) <= method_distance(:to_s)
         cat(output_buffer)
       else
+        ActiveSupport::Deprecation.warn("#cat should be defined for rendering #{method_owner(:to_s)} instead of #to_s")
         output_buffer << to_s
       end
     end
