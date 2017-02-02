@@ -5,6 +5,7 @@ describe "Building forms" do
   let(:assigns){ {} }
   let(:helpers){ mock_action_view }
   let(:html) { form.to_s }
+  let(:output_buffer) { form.render_in(form) }
 
   describe "building a simple form for" do
 
@@ -33,6 +34,9 @@ describe "Building forms" do
       expect(html).to have_selector("form input[type=text]")
     end
 
+    it "should render equally with each strategy" do
+      expect(output_buffer).to eq html
+    end
   end
 
   describe "building a form with fields for" do
@@ -60,6 +64,10 @@ describe "Building forms" do
 
     it "should not render a div for the proxy" do
       expect(html).not_to have_selector("form div.fields_for_proxy")
+    end
+
+    it "should render equally with each strategy" do
+      expect(output_buffer).to eq html
     end
 
   end
@@ -98,6 +106,10 @@ describe "Building forms" do
 
     it "should correnctly nest elements within fields for" do
       expect(html).to have_selector("form > div.permissions > div.permissions_label label")
+    end
+
+    it "should render equally with each strategy" do
+      expect(output_buffer).to eq html
     end
   end
 
