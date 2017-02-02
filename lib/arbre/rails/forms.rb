@@ -86,6 +86,11 @@ module Arbre
           children.to_s
         end
 
+        def cat(output_buffer)
+          children.each { |element| element.cat_or_to_s(output_buffer) }
+          output_buffer
+        end
+
       end
 
     end
