@@ -5,7 +5,7 @@ module Arbre
         <<-END
         Arbre::Context.new(assigns, self) {
           #{template.source}
-        }.to_s
+        }.cat.tap { |ios| ios.rewind }.read.html_safe
         END
       end
     end
