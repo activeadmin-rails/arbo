@@ -30,6 +30,10 @@ class TestController < ActionController::Base
     @my_instance_var = "From Instance Var"
     render "arbre/page_with_arb_partial_and_assignment"
   end
+
+  def render_page_with_helper_with_block
+    render "arbre/page_with_helper_with_block"
+  end
 end
 
 
@@ -80,4 +84,14 @@ EOS
     expect(body).to have_selector("p", text: "Partial: From Instance Var")
   end
 
+  it "should render a page with helper with block" do
+    get "/test/render_page_with_helper_with_block"
+    expect(response).to be_success
+    expect(body).to eq <<-EOS
+<span>before link</span>
+<a href="/link_path">  <i class=\"link-class\">Link text</i>
+</a>
+<span>after link</span>
+EOS
+  end
 end

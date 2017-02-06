@@ -1,0 +1,5 @@
+span { 'before link' }
+link_to '/link_path' do
+  i "Link text", class: 'link-class'
+end
+span { 'after link' }

@@ -193,7 +193,11 @@ module Arbre
       elsif assigns && assigns.has_key?(name)
         assigns[name]
       elsif helpers.respond_to?(name)
-        helpers.send(name, *args, &block)
+        dummy_tag, html = Arbre::Element.new, ""
+        within(dummy_tag) do
+          html = helpers.send(name, *args, &block) << "\n"
+        end
+        current_arbre_element.add_child Arbre::HTML::TextNode.from_string(html)
       else
         super
       end
