@@ -98,6 +98,10 @@ module Arbre
       @output_buffer ||= StringIO.new
     end
 
+    def output_buffer=(buffer)
+      @output_buffers = buffer
+    end
+
     private
 
 
@@ -107,7 +111,7 @@ module Arbre
       if defined?(@cached_html)
         @cached_html
       else
-        html = to_s
+        html = cat(String.new)
         @cached_html = html if html.length > 0
         html
       end
