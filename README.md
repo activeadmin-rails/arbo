@@ -1,3 +1,6 @@
+This is a fork of the original Arbre project starting when I stepped down from maintaining Active Admin in 2018.
+Google 'why fork open source' for relevant articles.
+
 # Arbre - HTML Views in Ruby
 
 [Arbre](https://www.activeadmin.info/arbre) makes it easy to generate HTML directly in Ruby. This gem was extracted from [Active Admin](https://github.com/activeadmin/active_admin).
