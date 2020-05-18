@@ -1,4 +1,5 @@
 require 'arbre/element'
+require 'ruby2_keywords'
 
 module Arbre
 
@@ -74,7 +75,7 @@ module Arbre
     # Webservers treat Arbre::Context as a string. We override
     # method_missing to delegate to the string representation
     # of the html.
-    def method_missing(method, *args, &block)
+    ruby2_keywords def method_missing(method, *args, &block)
       if cached_html.respond_to? method
         cached_html.send method, *args, &block
       else
