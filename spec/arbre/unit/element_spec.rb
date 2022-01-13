@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'timeout'
 
 describe Arbre::Element do
 
