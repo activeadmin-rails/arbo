@@ -27,7 +27,7 @@ describe Arbre::Context do
   end
 
   it "should use a cached version of the HTML for method delegation" do
-    expect(context).to receive(:to_s).once.and_return("<h1>札幌市北区</h1>")
+    expect(context).to receive(:render_in).once.and_return("<h1>札幌市北区</h1>")
     expect(context.index('<')).to eq(0)
     expect(context.index('<')).to eq(0)
   end

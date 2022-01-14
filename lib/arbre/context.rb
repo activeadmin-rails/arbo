@@ -107,7 +107,7 @@ module Arbre
       if defined?(@cached_html)
         @cached_html
       else
-        html = to_s
+        html = render_in(self)
         @cached_html = html if html.length > 0
         html
       end
