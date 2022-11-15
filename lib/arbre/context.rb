@@ -95,7 +95,7 @@ module Arbre
     alias_method :within, :with_current_arbre_element
 
     def output_buffer
-      @output_buffer ||= StringIO.new
+      @output_buffer ||= ActiveSupport::SafeBuffer.new
     end
 
     private

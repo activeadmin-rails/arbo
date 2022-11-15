@@ -25,7 +25,7 @@ module Arbre
         <<-END
         Arbre::Context.new(assigns, self) {
           #{source}
-        }.to_s
+        }.render_in(self).html_safe
         END
       end
     end

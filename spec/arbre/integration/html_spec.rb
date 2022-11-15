@@ -6,7 +6,7 @@ describe Arbre do
   let(:assigns){ {} }
 
   def output_buffer(actx)
-    actx.render_in(actx) && actx.output_buffer.rewind && actx.output_buffer.read
+    actx.render_in(actx) && actx.output_buffer
   end
 
   it "should render a single element" do

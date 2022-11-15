@@ -143,26 +143,27 @@ module Arbre
       def indent_in_context(context)
         spaces = ' ' * indent_level * INDENT_SIZE
 
-        pos = context.output_buffer.tell
+        pos = context.output_buffer.length
 
         if no_child? || child_is_text?
           if self_closing_tag?
-            context.output_buffer << spaces << opening_tag.sub( />$/, '/>' )
+            context.output_buffer << spaces << opening_tag.sub( />$/, '/>' ).html_safe
           else
             # one line
-            context.output_buffer << spaces << opening_tag << children.to_s << closing_tag
+            context.output_buffer << spaces << opening_tag.html_safe
+            children.render_in(context)
+            context.output_buffer << closing_tag.html_safe
           end
         else
           # multiple lines
-          context.output_buffer << spaces << opening_tag << "\n"
+          context.output_buffer << spaces << opening_tag.html_safe << "\n"
           children.render_in(context)
-          context.output_buffer << spaces << closing_tag
+          context.output_buffer << spaces << closing_tag.html_safe
         end
 
         context.output_buffer << "\n"
 
-        context.output_buffer.seek(pos)
-        context.output_buffer.read
+        context.output_buffer[pos..].html_safe
       end
 
       def self_closing_tag?
