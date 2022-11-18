@@ -132,14 +132,16 @@ module Arbre
     end
 
     def inspect
-      to_s
+      content
     end
 
     def to_str
-      to_s
+      ActiveSupport::Deprecation.warn("don't rely on implicit conversion of Element to String")
+      content
     end
 
     def to_s
+      ActiveSupport::Deprecation.warn("#render_in should be defined for rendering #{method_owner(:to_s)} instead of #to_s")
       content
     end
 
