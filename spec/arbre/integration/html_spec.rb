@@ -5,66 +5,83 @@ describe Arbre do
   let(:helpers){ nil }
   let(:assigns){ {} }
 
+  def output_buffer(actx)
+    actx.render_in(actx) && actx.output_buffer
+  end
+
   it "should render a single element" do
-    expect(arbre {
+    actx = arbre {
       span "Hello World"
-    }.to_s).to eq("<span>Hello World</span>\n")
+    }
+    html = "<span>Hello World</span>\n"
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should render a child element" do
-    expect(arbre {
+    actx = arbre {
       span do
         span "Hello World"
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <span>
   <span>Hello World</span>
 </span>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should render an unordered list" do
-    expect(arbre {
+    actx = arbre {
       ul do
         li "First"
         li "Second"
         li "Third"
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <ul>
   <li>First</li>
   <li>Second</li>
   <li>Third</li>
 </ul>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
-   it "should allow local variables inside the tags" do
-     expect(arbre {
+  it "should allow local variables inside the tags" do
+    actx = arbre {
        first = "First"
        second = "Second"
        ul do
          li first
          li second
        end
-     }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <ul>
   <li>First</li>
   <li>Second</li>
 </ul>
 HTML
-   end
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
+  end
 
 
   it "should add children and nested" do
-    expect(arbre {
+    actx = arbre {
       div do
         ul
         li do
           li
         end
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <div>
   <ul></ul>
   <li>
@@ -72,32 +89,38 @@ HTML
   </li>
 </div>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
 
   it "should pass the element in to the block if asked for" do
-    expect(arbre {
+    actx = arbre {
       div do |d|
         d.ul do
           li
         end
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <div>
   <ul>
     <li></li>
   </ul>
 </div>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
 
   it "should move content tags between parents" do
-    expect(arbre {
+    actx = arbre {
       div do
         span(ul(li))
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <div>
   <span>
     <ul>
@@ -106,23 +129,28 @@ HTML
   </span>
 </div>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should add content to the parent if the element is passed into block" do
-    expect(arbre {
+    actx = arbre {
       div do |d|
         d.id = "my-tag"
         ul do
           li
         end
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <div id="my-tag">
   <ul>
     <li></li>
   </ul>
 </div>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should have the parent set on it" do
@@ -137,13 +165,16 @@ HTML
   end
 
   it "should set a string content return value with no children" do
-    expect(arbre {
+    actx = arbre {
       li do
         "Hello World"
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <li>Hello World</li>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   it "should turn string return values into text nodes" do
@@ -158,40 +189,55 @@ HTML
   end
 
   it "should not render blank arrays" do
-    expect(arbre {
+    actx = arbre {
       tbody do
         []
       end
-    }.to_s).to eq <<-HTML
+    }
+    html = <<-HTML
 <tbody></tbody>
 HTML
+    expect(actx.to_s).to eq(html)
+    expect(output_buffer actx).to eq(html)
   end
 
   describe "self-closing nodes" do
 
     it "should not self-close script tags" do
-      expect(arbre {
+      actx = arbre {
         script type: 'text/javascript'
-      }.to_s).to eq("<script type=\"text/javascript\"></script>\n")
+      }
+      html = "<script type=\"text/javascript\"></script>\n"
+      expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should self-close meta tags" do
-      expect(arbre {
+      actx = arbre {
         meta content: "text/html; charset=utf-8"
-      }.to_s).to eq("<meta content=\"text/html; charset=utf-8\"/>\n")
+      }
+      html = "<meta content=\"text/html; charset=utf-8\"/>\n"
+      expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should self-close link tags" do
-      expect(arbre {
+      actx = arbre {
         link rel: "stylesheet"
-      }.to_s).to eq("<link rel=\"stylesheet\"/>\n")
+      }
+      html = "<link rel=\"stylesheet\"/>\n"
+      expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     Arbre::HTML::Tag::SELF_CLOSING_ELEMENTS.each do |tag|
       it "should self-close #{tag} tags" do
-        expect(arbre {
+        actx = arbre {
           send(tag)
-        }.to_s).to eq("<#{tag}/>\n")
+        }
+        html = "<#{tag}/>\n"
+        expect(actx.to_s).to eq(html)
+        expect(output_buffer actx).to eq(html)
       end
     end
 
@@ -200,11 +246,14 @@ HTML
   describe "html safe" do
 
     it "should escape the contents" do
-      expect(arbre {
+      actx = arbre {
         span("<br />")
-      }.to_s).to eq <<-HTML
+      }
+      html = <<-HTML
 <span>&lt;br /&gt;</span>
 HTML
+      expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should return html safe strings" do
@@ -214,35 +263,43 @@ HTML
     end
 
     it "should not escape html passed in" do
-      expect(arbre {
+      actx = arbre {
         span(span("<br />"))
-      }.to_s).to eq <<-HTML
+      }
+      html = <<-HTML
 <span>
   <span>&lt;br /&gt;</span>
 </span>
 HTML
+      expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should escape string contents when passed in block" do
-      expect(arbre {
+      actx = arbre {
         span {
           span {
             "<br />"
           }
         }
-      }.to_s).to eq <<-HTML
+      }
+      html = <<-HTML
 <span>
   <span>&lt;br /&gt;</span>
 </span>
 HTML
+      expect(actx.to_s).to eq(html)
+      expect(output_buffer actx).to eq(html)
     end
 
     it "should escape the contents of attributes" do
-      expect(arbre {
+      actx = arbre {
         span(class: "<br />")
-      }.to_s).to eq <<-HTML
+      }
+      html = <<-HTML
 <span class="&lt;br /&gt;"></span>
 HTML
+      expect(actx.to_s).to eq(html)
     end
 
   end

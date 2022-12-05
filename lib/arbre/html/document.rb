@@ -25,6 +25,12 @@ module Arbre
         doctype + super
       end
 
+      def render_in(context = arbre_context)
+        context.output_buffer << doctype
+        super
+        context.output_buffer
+      end
+
       protected
 
       def build_head

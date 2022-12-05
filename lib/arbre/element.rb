@@ -1,6 +1,7 @@
 require 'arbre/element/builder_methods'
 require 'arbre/element/proxy'
 require 'arbre/element_collection'
+require 'ruby2_keywords'
 
 module Arbre
 
@@ -132,15 +133,34 @@ module Arbre
     end
 
     def inspect
-      to_s
+      content
     end
 
     def to_str
-      to_s
+      ActiveSupport::Deprecation.warn("don't rely on implicit conversion of Element to String")
+      content
     end
 
     def to_s
+      ActiveSupport::Deprecation.warn("#render_in should be defined for rendering #{method_owner(:to_s)} instead of #to_s")
       content
+    end
+
+    # Rendering strategy that visits all elements and appends output to a buffer.
+    def render_in(context = arbre_context)
+      children.collect do |element|
+        element.render_in_or_to_s(context)
+      end.join('')
+    end
+
+    # Use render_in to render element unless closer ancestor overrides :to_s only.
+    def render_in_or_to_s(context)
+      if method_distance(:render_in) <= method_distance(:to_s)
+        render_in(context)
+      else
+        ActiveSupport::Deprecation.warn("#render_in should be defined for rendering #{method_owner(:to_s)} instead of #to_s")
+        to_s.tap { |s| context.output_buffer << s }
+      end
     end
 
     def +(element)
@@ -172,7 +192,7 @@ module Arbre
     #  3. Call the method on the helper object
     #  4. Call super
     #
-    def method_missing(name, *args, &block)
+    ruby2_keywords def method_missing(name, *args, &block)
       if current_arbre_element.respond_to?(name)
         current_arbre_element.send name, *args, &block
       elsif assigns && assigns.has_key?(name)
@@ -188,10 +208,18 @@ module Arbre
     # which will be rendered (#to_s) inside ActionView::Base#capture.
     # We do not want such elements added to self, so we push a dummy
     # current_arbre_element.
-    def helper_capture(name, *args, &block)
+    ruby2_keywords def helper_capture(name, *args, &block)
       s = ""
       within(Element.new) { s = helpers.send(name, *args, &block) }
       s.is_a?(Element) ? s.to_s : s
+    end
+
+    def method_distance(name)
+      self.class.ancestors.index method_owner(name)
+    end
+
+    def method_owner(name)
+      self.class.instance_method(name).owner
     end
   end
 end

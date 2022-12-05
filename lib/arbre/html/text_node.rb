@@ -33,6 +33,10 @@ module Arbre
       def to_s
         ERB::Util.html_escape(@content.to_s)
       end
+
+      def render_in(context)
+        to_s.tap { |s| context.output_buffer << s }
+      end
     end
 
   end

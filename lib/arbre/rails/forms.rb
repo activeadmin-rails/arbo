@@ -86,6 +86,12 @@ module Arbre
           children.to_s
         end
 
+        def render_in(context)
+          children.collect do |element|
+            element.render_in_or_to_s(context)
+          end.join('')
+        end
+
       end
 
     end
