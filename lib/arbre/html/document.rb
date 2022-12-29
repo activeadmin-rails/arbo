@@ -3,12 +3,6 @@ module Arbre
 
     class Document < Tag
 
-      def build(*args)
-        super
-        build_head
-        build_body
-      end
-
       def document
         self
       end
@@ -31,17 +25,6 @@ module Arbre
         context.output_buffer
       end
 
-      protected
-
-      def build_head
-        @head = head do
-          meta :"http-equiv" => "Content-type", content: "text/html; charset=utf-8"
-        end
-      end
-
-      def build_body
-        @body = body
-      end
     end
 
   end
