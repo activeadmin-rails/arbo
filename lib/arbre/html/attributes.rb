@@ -4,7 +4,7 @@ module Arbre
     class Attributes < Hash
 
       def to_s
-        map do |name, value|
+        flatten_hash.map do |name, value|
           next if value_empty?(value)
           "#{html_escape(name)}=\"#{html_escape(value)}\""
         end.compact.join ' '
@@ -15,6 +15,18 @@ module Arbre
       end
 
       protected
+
+      def flatten_hash(hash = self, old_path = [], accumulator = {})
+        hash.each do |key, value|
+          path = old_path + [key]
+          if value.is_a? Hash
+            flatten_hash(value, path, accumulator)
+          else
+            accumulator[path.join('-')] = value
+          end
+        end
+        accumulator
+      end
 
       def value_empty?(value)
         value.respond_to?(:empty?) ? value.empty? : !value
