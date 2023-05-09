@@ -7,7 +7,6 @@ gem 'mime-types', '~> 2.6', platforms: :ruby_19
 group :test do
   gem 'rspec'
   gem 'rack'
-  gem 'pry'
 end
 
 group :rails do
