@@ -16,7 +16,7 @@ require 'spec_helper'
 require 'rails/support/mock_person'
 
 # Ensure that the rails plugin is installed
-require 'arbre/rails'
+require 'arbo/rails'
 
 Rails.application.routes.draw do
   get 'test/:action', controller: "test"

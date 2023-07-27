@@ -10,7 +10,7 @@ describe "Building forms" do
   describe "building a simple form for" do
 
     let(:form) do
-      arbre do
+      arbo do
         form_for MockPerson.new, url: "/" do |f|
           f.label :name
           f.text_field :name
@@ -42,7 +42,7 @@ describe "Building forms" do
   describe "building a form with fields for" do
 
     let(:form) do
-      arbre do
+      arbo do
         form_for MockPerson.new, url: "/" do |f|
           f.label :name
           f.text_field :name
@@ -74,7 +74,7 @@ describe "Building forms" do
 
   describe "forms with other elements" do
     let(:form) do
-      arbre do
+      arbo do
         form_for MockPerson.new, url: "/" do |f|
 
           div do

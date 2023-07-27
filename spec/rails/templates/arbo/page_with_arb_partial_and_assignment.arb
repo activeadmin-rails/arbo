@@ -1,0 +1,3 @@
+h1 "Before Partial"
+render "arbo/partial_with_assignment"
+h2 "After Partial"

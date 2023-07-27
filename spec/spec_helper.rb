@@ -1,7 +1,7 @@
 require 'support/bundle'
 
-require 'arbre'
+require 'arbo'
 
-def arbre(&block)
-  Arbre::Context.new assigns, helpers, &block
+def arbo(&block)
+  Arbo::Context.new assigns, helpers, &block
 end

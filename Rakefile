@@ -11,7 +11,7 @@ task :console do
   require 'irb/completion'
 
   require 'pry'
-  require 'arbre'
+  require 'arbo'
 
   ARGV.clear
   IRB.start

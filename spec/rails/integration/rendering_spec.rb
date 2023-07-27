@@ -1,43 +1,43 @@
 require 'rails/rails_spec_helper'
 
-ARBRE_VIEWS_PATH = File.expand_path("../../templates", __FILE__)
+ARBO_VIEWS_PATH = File.expand_path("../../templates", __FILE__)
 
 class TestController < ActionController::Base
-  append_view_path ARBRE_VIEWS_PATH
+  append_view_path ARBO_VIEWS_PATH
 
   def render_empty
-    render "arbre/empty"
+    render "arbo/empty"
   end
 
   def render_simple_page
-    render "arbre/simple_page"
+    render "arbo/simple_page"
   end
 
   def render_partial
-    render "arbre/page_with_partial"
+    render "arbo/page_with_partial"
   end
 
   def render_erb_partial
-    render "arbre/page_with_erb_partial"
+    render "arbo/page_with_erb_partial"
   end
 
   def render_with_instance_variable
     @my_instance_var = "From Instance Var"
-    render "arbre/page_with_assignment"
+    render "arbo/page_with_assignment"
   end
 
   def render_partial_with_instance_variable
     @my_instance_var = "From Instance Var"
-    render "arbre/page_with_arb_partial_and_assignment"
+    render "arbo/page_with_arb_partial_and_assignment"
   end
 
   def render_page_with_helpers
-    render "arbre/page_with_helpers"
+    render "arbo/page_with_helpers"
   end
 end
 
 
-describe TestController, "Rendering with Arbre", type: :request do
+describe TestController, "Rendering with Arbo", type: :request do
   let(:body){ response.body }
 
   it "should render the empty template" do
@@ -78,7 +78,7 @@ EOS
     expect(body).to have_selector("h1", text: "From Instance Var")
   end
 
-  it "should render an arbre partial with assignments" do
+  it "should render an arbo partial with assignments" do
     get "/test/render_partial_with_instance_variable"
     expect(response).to be_successful
     expect(body).to have_selector("p", text: "Partial: From Instance Var")
