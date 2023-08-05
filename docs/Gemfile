@@ -1,2 +1,5 @@
 gem 'github-pages'
+gem 'jekyll-default-layout'
 gem 'jekyll-redirect-from'
+gem 'just-the-docs'
+gem 'webrick'
