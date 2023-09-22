@@ -85,17 +85,17 @@ Several examples of Arbo components are [included in Active Admin](https://activ
 
 ### Contexts
 
-An [Arbo::Context](http://www.rubydoc.info/gems/arbo/Arbo/Context) is an object in which Arbo DSL is interpreted, providing a root for the Ruby DOM that can be [searched and manipulated](http://www.rubydoc.info/gems/arbo/Arbo/Element). A context is automatically provided when a `.arb` template or partial is loaded. Contexts can be used when developing or testing a component.  Contexts are rendered by calling to_s.
+An [Arbo::Context](http://www.rubydoc.info/gems/arbo/Arbo/Context) is an object in which Arbo DSL is interpreted, providing a root for the Ruby DOM that can be [searched and manipulated](http://www.rubydoc.info/gems/arbo/Arbo/Element). A context is automatically provided when a `.arb` template or partial is loaded. Contexts can be used when developing or testing a component.  Contexts are rendered by calling render_in.
 
 ```ruby
 html = Arbo::Context.new do
-  panel "Hello World", id: "my-panel" do
+  div "Hello World", id: "my-panel" do
     span "Inside the panel"
     text_node "Plain text"
   end
 end
 
-puts html.to_s # =>
+puts html.render_in # =>
 ```
 
 ```html
