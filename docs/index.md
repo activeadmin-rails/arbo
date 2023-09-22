@@ -4,6 +4,19 @@ redirect_from: /docs/documentation.html
 # Arbo
 HTML Views in Ruby
 
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
 ### Introduction
 
 Arbo is a alternate template system for [Ruby on Rails Action View](http://guides.rubyonrails.org/action_view_overview.html).
