@@ -1,6 +1,11 @@
 # Changelog
 
-## 1.2.0 [☰](https://github.com/varyonic/arbo/compare/v1.1.0...v1.1.1)
+## 1.3.0 [☰](https://github.com/varyonic/arbo/compare/v1.2.0...v1.3.0)
+
+* Support Rails 7.1. [#3] by [@varyonic]
+* Update documentation including fresh theme. [#4] by [@varyonic]
+
+## 1.2.0 [☰](https://github.com/varyonic/arbo/compare/v1.1.1...v1.2.0)
 
 * Fix rendering `link_to` with a block in a arbre template. [#64][] by [@varyonic][]
 * Fix deprecation warning about single arity template handlers on Rails 6. [#110][] by [@aramvisser][]
@@ -78,6 +83,8 @@ Initial release and extraction from Active Admin
 
 [#1]: https://github.com/varyonic/arbo/pull/1
 [#2]: https://github.com/varyonic/arbo/pull/2
+[#3]: https://github.com/varyonic/arbo/pull/3
+[#4]: https://github.com/varyonic/arbo/pull/4
 
 [@aramvisser]: https://github.com/aramvisser
 [@deivid-rodriguez]: https://github.com/deivid-rodriguez
