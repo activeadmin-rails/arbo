@@ -1,7 +1,10 @@
 plugins:
+  - jekyll-default-layout
   - jekyll-redirect-from
 
-defaults:
-  -
-    values:
-      layout: "default"
+theme: just-the-docs
+title: Arbo | HTML Views in Ruby
+# Aux links for the upper right navigation
+aux_links:
+  "Get the Code":
+    - "//github.com/varyonic/arbo"
