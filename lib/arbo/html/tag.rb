@@ -163,7 +163,7 @@ module Arbo
 
         context.output_buffer << "\n"
 
-        context.output_buffer[pos..].html_safe
+        context.output_buffer.to_str[pos..].html_safe
       end
 
       def self_closing_tag?
