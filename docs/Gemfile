@@ -1,4 +1,6 @@
-gem 'github-pages'
+source 'http://rubygems.org'
+
+gem 'jekyll'
 gem 'jekyll-default-layout'
 gem 'jekyll-redirect-from'
 gem 'just-the-docs'
