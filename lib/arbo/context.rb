@@ -46,6 +46,11 @@ module Arbo
       instance_eval(&block) if block_given?
     end
 
+    # Override default implementation, which would call deprecated Element#to_s
+    def inspect
+      "#<#{self.class}:0x#{(object_id << 1).to_s(16)}"
+    end
+
     def arbo_context
       self
     end
