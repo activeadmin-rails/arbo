@@ -11,7 +11,7 @@ module Arbo
   #       h1 "Hello World"
   #     end
   #
-  #     html.to_s #=> "<h1>Hello World</h1>"
+  #     html.render_in #=> "<h1>Hello World</h1>"
   #
   # The contents of the block are instance eval'd within the Context
   # object. This means that you lose context to the outside world from
@@ -22,7 +22,7 @@ module Arbo
   #       h1 "Your number #{one}"
   #     end
   #
-  #     html.to_s #=> "Your number 1"
+  #     html.render_in #=> "Your number 1"
   #
   class Context < Element
 
