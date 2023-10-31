@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 [☰](https://github.com/varyonic/arbo/compare/v1.3.0...v1.3.1)
+
+* Fix patch of ActionView capture: OutputBuffer. [#5] by [@varyonic]
+
 ## 1.3.0 [☰](https://github.com/varyonic/arbo/compare/v1.2.0...v1.3.0)
 
 * Support Rails 7.1. [#3] by [@varyonic]
@@ -85,6 +89,7 @@ Initial release and extraction from Active Admin
 [#2]: https://github.com/varyonic/arbo/pull/2
 [#3]: https://github.com/varyonic/arbo/pull/3
 [#4]: https://github.com/varyonic/arbo/pull/4
+[#5]: https://github.com/varyonic/arbo/pull/5
 
 [@aramvisser]: https://github.com/aramvisser
 [@deivid-rodriguez]: https://github.com/deivid-rodriguez
