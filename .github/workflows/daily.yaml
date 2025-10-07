@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby: [{ name: 3.2, value: 3.2.2 }, { name: 3.0, value: 3.0.1 }]
+        ruby: [{ name: 3.4, value: 3.4.6 }, { name: 3.2, value: 3.2.9 }]
 
     steps:
       - uses: actions/checkout@v4
